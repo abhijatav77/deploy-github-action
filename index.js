@@ -5,7 +5,7 @@ const PORT = process.env.PORT ?? 8080
 
 app.get("/", (req, res)=>{
     res.status(200).json({
-        msg: "Hello from the v2 server"
+        msg: "Hello from the server"
     })
 })
 
