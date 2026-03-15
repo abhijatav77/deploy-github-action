@@ -1,0 +1,27 @@
+name: Local CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-run:
+    runs-on: self-hosted   # <-- this uses your local runner
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t api .
+
+      - name: Stop existing container (if any)
+        run: |
+          docker stop my-api || true
+          docker rm my-api || true
+
+      - name: Run Docker container
+        run: docker run -d -p 8080:8080 --name my-api api
+
+      - name: Check container status
+        run: docker ps
